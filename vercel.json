@@ -1,0 +1,57 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "next build",
+  "devCommand": "next dev",
+  "installCommand": "npm install",
+  "outputDirectory": ".next",
+  "regions": ["cdg1"],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    },
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=43200"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/categorie/hygiene-products",
+      "destination": "/?category=hygiene+products",
+      "permanent": false
+    },
+    {
+      "source": "/categorie/skincare",
+      "destination": "/?category=skincare",
+      "permanent": false
+    },
+    {
+      "source": "/categorie/organic-cosmetics",
+      "destination": "/?category=organic+cosmetics",
+      "permanent": false
+    }
+  ]
+}
