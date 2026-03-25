@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import Image from 'next/image';
 
-export default function Header({ locale }: { locale: Language }) {
+export default function Header({ locale = 'fr' }: { locale?: Language }) {
   const pathname = usePathname();
   const t = translations[locale];
   const [isMenuOpen, setIsMenuOpen] = useState(false);

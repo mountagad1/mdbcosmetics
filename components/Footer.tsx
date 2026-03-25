@@ -5,7 +5,7 @@ import { Language, translations } from '@/data/translations';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function Footer({ locale }: { locale: Language }) {
+export default function Footer({ locale = 'fr' }: { locale?: Language }) {
   const t = translations[locale];
 
   return (
