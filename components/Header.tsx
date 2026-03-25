@@ -1,46 +1,77 @@
+// components/Header.tsx
+'use client';
+
+import { Language, translations } from '@/data/translations';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useState } from 'react';
+import Image from 'next/image';
 
-export default function Header() {
+export default function Header({ locale }: { locale: Language }) {
+  const pathname = usePathname();
+  const t = translations[locale];
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleLocale = (newLocale: Language) => {
+    const path = pathname.replace(`/${locale}`, `/${newLocale}`);
+    window.location.href = path;
+  };
+
+  const navLinks = [
+    { href: `/${locale}`, label: t.nav.home },
+    { href: `/${locale}/products`, label: t.nav.products },
+    { href: `/${locale}/countries`, label: t.nav.countries },
+    { href: `/${locale}/cities`, label: t.nav.cities },
+  ];
+
   return (
-    <header className="sticky top-0 z-50 bg-cream-50/90 backdrop-blur-md border-b border-cream-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 rounded-full bg-blush-500 flex items-center justify-center">
-              <span className="text-white text-xs font-bold">M</span>
-            </div>
-            <span className="font-display text-xl text-charcoal-800 tracking-tight">
-              MDB<span className="text-blush-500">cosmetics</span>
-            </span>
-          </Link>
+    <header className="header">
+      <div className="header-container">
+        <Link href={`/${locale}`} className="logo-wrapper">
+          <Image
+            src="/logo-removebg-preview.png"
+            alt="MDB Cosmetics"
+            width={50}
+            height={50}
+            className="logo-image"
+          />
+          <span className="logo-text">MDB Cosmetics</span>
+        </Link>
 
-          {/* Nav */}
-          <nav className="hidden md:flex items-center gap-8">
-            <Link
-              href="/categorie/skincare"
-              className="text-sm text-charcoal-800/70 hover:text-blush-500 transition-colors font-medium"
-            >
-              Skincare
+        <nav className={`nav ${isMenuOpen ? 'open' : ''}`}>
+          {navLinks.map(link => (
+            <Link key={link.href} href={link.href} className="nav-link">
+              {link.label}
             </Link>
-            <Link
-              href="/categorie/hygiene-products"
-              className="text-sm text-charcoal-800/70 hover:text-blush-500 transition-colors font-medium"
-            >
-              Hygiène
-            </Link>
-            <Link
-              href="/categorie/organic-cosmetics"
-              className="text-sm text-charcoal-800/70 hover:text-blush-500 transition-colors font-medium"
-            >
-              Bio
-            </Link>
-          </nav>
+          ))}
+        </nav>
 
-          {/* CTA */}
-          <Link href="/" className="btn-primary text-xs py-2 px-4 hidden sm:inline-flex">
-            Voir tous les guides
-          </Link>
+        <div className="header-actions">
+          <div className="locale-switcher">
+            <button
+              className={`locale-btn ${locale === 'fr' ? 'active' : ''}`}
+              onClick={() => toggleLocale('fr')}
+              aria-label="Français"
+            >
+              FR
+            </button>
+            <span className="locale-divider">|</span>
+            <button
+              className={`locale-btn ${locale === 'en' ? 'active' : ''}`}
+              onClick={() => toggleLocale('en')}
+              aria-label="English"
+            >
+              EN
+            </button>
+          </div>
+
+          <button
+            className="menu-toggle"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            ☰
+          </button>
         </div>
       </div>
     </header>
