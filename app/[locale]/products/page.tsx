@@ -111,13 +111,14 @@ export default function ProductsPage({ params }: { params: { locale: Language } 
                       </div>
                     </div>
 
-                    <a
-                      href={getAmazonAffiliateLink(product.amazonAsin, locale)}\n                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="buy-button"
-                    >
-                      {t.products.affiliate}
-                    </a>
+                   <a
+  href={getAmazonAffiliateLink(product.amazonAsin, locale)}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="buy-button"
+>
+  {t.products.affiliate}
+</a>
                   </div>
                 </div>
               ))}
